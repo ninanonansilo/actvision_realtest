@@ -1,0 +1,20 @@
+{
+    "id": "",
+    "pw": "",
+    "setup_place": "포항",
+    "setup_day": {
+         "year": "2021",
+         "month": "3",
+         "day": "28",
+         "hour": "00",
+         "minute": "00",
+         "second": "00"
+    },
+    "display": {
+         "width": "80",
+         "height": "64"
+    },
+    "max_brightness": "63",
+    "serial": "10000000a71b32fa",
+    "company_name": "승호 생일"
+}

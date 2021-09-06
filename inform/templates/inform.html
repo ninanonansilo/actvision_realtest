@@ -1,0 +1,138 @@
+{% extends 'base.html' %} 
+{%block content%} 
+{%load static%}
+<head>
+    <link rel="stylesheet" href="{%static 'base.css'%}">
+    <title>Actvision 정보</title>
+    <style>
+        .box{
+            margin: 0 auto;
+            width: 200px;
+            height: 300px;
+            border:3px solid #383838;
+            margin-top: 15%;
+        }
+        table, tr, td {
+            border : 1px solid #797979;
+            border-collapse: collapse;
+        }
+
+    </style>
+</head>
+<body bgcolor="#454545">
+    <header>
+        <nav>
+          <div>
+            <ul class="nav-container">
+              <a class="LOGO_img">
+                <img src="{%static 'navLogo.jpg'%}">
+              </a>
+              <li class="nav-item">
+                <a href="{% url 'movie.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'media.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'image.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'event.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'settings.html' %}"  class="nav-link">
+                  <img class="media" id="img" src="{%static 'setting.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'inform.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'clickinform.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'register.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'register.jpg'%}">
+                </a>
+              </li>
+              <li class="user_inform">
+                <ul>
+                  <li>ID    :{{userinfo}}</li>
+                  <li>Serial:</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    <div class="box">
+        <table align=center style="margin-top: 10px; color: white;" width="180px" height="130" cellspacing ="0" cellpadding="0">
+            <tr>
+                <td style="text-align: center;">언어 선택</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            한국어
+                        </label>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          English
+                        </label>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            中文
+                        </label>
+                      </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            日本語
+                        </label>
+                      </div>
+                </td>
+            </tr>
+        </table>
+
+        <table align=center style="text-align: center; margin-top: 22px; color: white;" width="180px" height="26px" cellspacing ="0" cellpadding="0">
+            <tr>
+                <td>
+                    사용설명서
+                </td>
+            </tr> 
+        </table>
+
+        <table align=center style="text-align: center; margin-top: 22px; color: white;" width="180px" height="26px" cellspacing ="0" cellpadding="0">
+            <tr>
+                <td>
+                    홈페이지
+                </td>
+            </tr> 
+        </table>
+
+        <table align=center style="text-align: center; margin-top: 22px; color: white;" width="180px" height="26px" cellspacing ="0" cellpadding="0">
+            <tr>
+                <td>
+                    Contact us
+                </td>
+            </tr> 
+        </table>
+    </div>
+
+</body>
+{%endblock content%} 

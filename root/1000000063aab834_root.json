@@ -1,0 +1,20 @@
+{
+    "id": "",
+    "pw": "",
+    "setup_place": "대구 어딘가",
+    "setup_day": {
+         "year": "2021",
+         "month": "7",
+         "day": "6",
+         "hour": "00",
+         "minute": "00",
+         "second": "00"
+    },
+    "display": {
+         "width": "80",
+         "height": "64"
+    },
+    "max_brightness": "63",
+    "serial": "1000000063aab834",
+    "company_name": "다인이 생일"
+}

@@ -1,0 +1,743 @@
+{% extends 'base.html' %} 
+{%block content%} 
+{%load static%}
+<head>
+    <link rel="stylesheet" href="{%static 'base.css'%}">
+    <script src="{%static 'register.js'%}"></script>
+
+    <title>Actvision 등록</title>
+    <style>
+        .box{
+            margin: 0 auto;
+            width: 400px;
+            height: 500px;
+            border:3px solid #333333;
+            margin-top: 10%;
+            border-radius: 8px;
+
+        }
+
+        .first-table{
+            text-align: center;
+            margin-top: 25px;
+            height: 375px;
+            width: 380px;
+        }
+
+        .keyward{
+            width: 150px;
+            color: white;
+        }
+
+        .keyboard{
+            width: 250px;
+        }
+
+        .text-field{
+            background-color: #454545;
+            border: 1px solid #888888;
+            width: 220px;
+            height: 24px;
+            border-radius: 3px;
+            color: white
+        }
+
+        .check-btn {
+            font-size: 14px;
+            border: none;
+            height: 30px;
+            background-color: #636363;
+            color: white;
+            width: 120px;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+        .check-btn:hover{background-color: #7a7a7a;}
+
+        .submit-btn {
+            font-size: 14px;
+            border: none;
+            height: 30px;
+            background-color: #636363;
+            color: white;
+            width: 60px;
+            font-weight: 600;
+            border-radius: 3px;
+        }
+        .submit-btn:hover{background-color: #7a7a7a;}
+
+        .bottom{
+            border-top: 2px solid #333333;
+            margin-top: 50px;
+        }
+
+        .bottom table{
+            height: 50px;
+            margin-left: 30px;
+        }
+
+        .bottom table .first{
+            width: 205px;
+        }
+
+        .bottom table .second{
+            width: 70px;
+        }
+
+        /* 조회 팝업 */
+        #popupCheck {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #popupCheck.hide {
+            display: none;
+        }
+
+        #popupCheck.has-filter {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #popupCheck .content {
+            height: 440px;
+            background: rgb(69, 69, 69);
+            box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+            border:5px solid #333333;
+        }
+
+        #popupCheck .TableBox{
+            height: 375px;
+            position: relative;
+            overflow: auto;
+            overflow-x: hidden;
+        }
+
+        #popupCheck .popup-table{
+            width: 800px;
+            margin-left: -0.5px;
+            color: black;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #popupCheck .popup-table th:nth-child(9){
+            width: 60px;
+        }
+
+        #popupCheck .popup-table th{
+            width: 100px;
+            height: 20px;
+            font-size: 14px;
+            border-left: 2px solid rgb(190, 190, 190);
+            border-bottom: 2px solid rgb(190, 190, 190);
+            background-color: rgb(238, 238, 238);
+            border-bottom: 5px solid rgb(68, 68, 68);
+        }
+        #popupCheck .popup-table td{
+            text-align: center;
+            font-size: 10px;
+        }
+        #popupCheck .popup-table td:nth-child(3) {
+            text-align: center;
+            font-size: 10px;
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+            width: 100px;
+        }
+
+        #popupCheck .popup-table tr:nth-child(2n) td{
+            height: 20px;
+            border: 2px solid rgb(190, 190, 190);
+            background-color: rgb(238, 238, 238);
+        }
+
+        #popupCheck .popup-table tr:nth-child(2n-1) td{
+            height: 20px;
+            border: 2px solid rgb(238, 238, 238);
+            background-color: rgb(190, 190, 190);
+        }
+
+
+
+
+        #popupCheck .popup-table .form-check{
+            text-align: center;
+        }
+
+        #popupCheck .button-table{
+            margin-right: 20px;
+            margin-top: 15px;
+        }
+
+        #popupCheck .button-table td{
+            width: 85px;
+        }
+
+        #popupCheck .okay{
+            background-color: #636363;
+            color:white;
+            border: none;
+            width: 70px;
+            right: 0;
+            height: 30px;
+            border-radius: 3px;
+        }
+        #popupCheck .okay:hover{background-color: #7a7a7a;}
+
+        #popupCheck .cancel{
+            background-color: #636363;
+            color:white;
+            border: none;
+            width: 70px;
+            height: 30px;
+            border-radius: 3px;
+        }
+
+        #popupCheck .cancel:hover{background-color: #7a7a7a;}
+
+
+        /* 등록 팝업 */
+        #popup {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #popup.hide {
+            display: none;
+        }
+
+        #popup.has-filter {
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #popup .content {
+            width: 550px;
+            height: 200px;
+            background: #454545;
+            border-radius: 6px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+            color: white;
+            text-align: center;
+            border:3px solid #333333;
+        }
+
+
+
+        #popup .title{
+            border-bottom: #363636 4px solid;
+            height: 30px;
+            font-size: 14px;
+            padding-top: 10px;
+
+        }
+
+        #popup .okay{
+            background-color: #636363;
+            color:white;
+            border: none;
+            width: 70px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        #popup .okay:hover{background-color: #7a7a7a;}
+
+        #popup .cancel{
+            background-color: #636363;
+            color:white;
+            border: none;
+            width: 70px;
+            height: 30px;
+            border-radius: 3px;
+        }
+        #popup .cancel:hover{background-color: #7a7a7a;}
+
+        .checkBtn{
+            border:none;
+            background-color: #636363;
+            color:white;
+            width: 40px;
+            height: 20px;
+            font-size: 10px;
+        }
+        .checkBtn:hover{background-color: #7a7a7a;}
+    </style>
+</head>
+<body bgcolor="#454545">
+    <header>
+        <nav>
+          <div>
+            <ul class="nav-container">
+              <a class="LOGO_img">
+                <img src="{%static 'navLogo.jpg'%}">
+              </a>
+              <li class="nav-item">
+                <a href="{% url 'movie.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'media.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'image.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'event.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'settings.html' %}"  class="nav-link">
+                  <img class="media" id="img" src="{%static 'setting.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'inform.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'inform.jpg'%}">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'register.html' %}" class="nav-link">
+                  <img class="media" id="img" src="{%static 'clickregister.jpg'%}">
+                </a>
+              </li>
+              <li class="user_inform">
+                <ul>
+                  <li>ID    :{{userinfo}}</li>
+                  <li>Serial:</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    <div class="box">
+        <table align="center" class="first-table">
+            <tr>
+                <td class="keyward">
+                    ID
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option1"></input>
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    PW
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option2">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    설치장소
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option3">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    설치일
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option4">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    업체명
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option5">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    해상도
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option6">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    최대 밝기
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option7">
+                </td>
+            </tr>
+            <tr>
+                <td class="keyward">
+                    플레이어 serial
+                </td>
+                <td class="keyboard">
+                    <input type="text" name="id" class="text-field" id="option8">
+                </td>
+            </tr>
+        </table>
+
+        <div class="bottom">
+            <table>
+                <tr>
+                    <td class=first>
+                        <button  class="check-btn" onclick="showPopupCheck_z(false)">조회</button>
+                        <script>
+                            function showPopupCheck_z(hasFilter) {
+                                const popupCheck = document.querySelector('#popupCheck');
+                                    if (hasFilter) {
+                                        popupCheck.classList.add('has-filter');
+                                        }
+                                    else {
+                                        popupCheck.classList.remove('has-filter');
+                                    }
+                                    popupCheck.classList.remove('hide');
+                            }
+                        </script>
+                    </td>
+                    <td class="second">
+                        <button type="submit" class="submit-btn" onclick="showPopup(false)">등록</button>
+                    </td>
+                    <td class="third">
+                        <button type="submit" class="submit-btn" onclick="clearInput()">취소</button>
+                    </td>
+                </tr>
+            </table>
+            <!-- 조회 팝업창 -->
+            <div id="popupCheck" class="hide">
+                <div class="content">
+                    <div class="TableBox">
+                        <table class="popup-table" id="popup-table">
+                            <tr>
+                                <th>ID</th>
+                                <th>PW</th>
+                                <th>설차장소</th>
+                                <th>설치일</th>
+                                <th>업체명</th>
+                                <th>해상도</th>
+                                <th>최대 밝기</th>
+                                <th>Serial</th>
+                                <th>선택</th>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.0}}</td>
+                                <td>{{pw_info.0}}</td>
+                                <td>{{setup_place.0}}</td>
+                                <td>{{setup_date.0}}</td>
+                                <td>{{company_name.0}}</td>
+                                <td>{{display.0}}</td>
+                                <td>{{max_brgt.0}}</td>
+                                <td>{{serial_number.0}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.1}}</td>
+                                <td>{{pw_info.1}}</td>
+                                <td>{{setup_place.1}}</td>
+                                <td>{{setup_date.1}}</td>
+                                <td>{{company_name.1}}</td>
+                                <td>{{display.1}}</td>
+                                <td>{{max_brgt.1}}</td>
+                                <td>{{serial_number.1}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.2}}</td>
+                                <td>{{pw_info.2}}</td>
+                                <td>{{setup_place.2}}</td>
+                                <td>{{setup_date.2}}</td>
+                                <td>{{company_name.2}}</td>
+                                <td>{{display.2}}</td>
+                                <td>{{max_brgt.2}}</td>
+                                <td>{{serial_number.2}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.3}}</td>
+                                <td>{{pw_info.3}}</td>
+                                <td>{{setup_place.3}}</td>
+                                <td>{{setup_date.3}}</td>
+                                <td>{{company_name.3}}</td>
+                                <td>{{display.3}}</td>
+                                <td>{{max_brgt.3}}</td>
+                                <td>{{serial_number.3}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.4}}</td>
+                                <td>{{pw_info.4}}</td>
+                                <td>{{setup_place.4}}</td>
+                                <td>{{setup_date.4}}</td>
+                                <td>{{company_name.4}}</td>
+                                <td>{{display.4}}</td>
+                                <td>{{max_brgt.4}}</td>
+                                <td>{{serial_number.4}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.5}}</td>
+                                <td>{{pw_info.5}}</td>
+                                <td>{{setup_place.5}}</td>
+                                <td>{{setup_date.5}}</td>
+                                <td>{{company_name.5}}</td>
+                                <td>{{display.5}}</td>
+                                <td>{{max_brgt.5}}</td>
+                                <td>{{serial_number.5}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.6}}</td>
+                                <td>{{pw_info.6}}</td>
+                                <td>{{setup_place.6}}</td>
+                                <td>{{setup_date.6}}</td>
+                                <td>{{company_name.6}}</td>
+                                <td>{{display.6}}</td>
+                                <td>{{max_brgt.6}}</td>
+                                <td>{{serial_number.6}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.7}}</td>
+                                <td>{{pw_info.7}}</td>
+                                <td>{{setup_place.7}}</td>
+                                <td>{{setup_date.7}}</td>
+                                <td>{{company_name.7}}</td>
+                                <td>{{display.7}}</td>
+                                <td>{{max_brgt.7}}</td>
+                                <td>{{serial_number.7}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.8}}</td>
+                                <td>{{pw_info.8}}</td>
+                                <td>{{setup_place.8}}</td>
+                                <td>{{setup_date.8}}</td>
+                                <td>{{company_name.8}}</td>
+                                <td>{{display.8}}</td>
+                                <td>{{max_brgt.8}}</td>
+                                <td>{{serial_number.8}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.9}}</td>
+                                <td>{{pw_info.9}}</td>
+                                <td>{{setup_place.9}}</td>
+                                <td>{{setup_date.9}}</td>
+                                <td>{{company_name.9}}</td>
+                                <td>{{display.9}}</td>
+                                <td>{{max_brgt.9}}</td>
+                                <td>{{serial_number.9}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.10}}</td>
+                                <td>{{pw_info.10}}</td>
+                                <td>{{setup_place.10}}</td>
+                                <td>{{setup_date.10}}</td>
+                                <td>{{company_name.10}}</td>
+                                <td>{{display.10}}</td>
+                                <td>{{max_brgt.10}}</td>
+                                <td>{{serial_number.10}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.11}}</td>
+                                <td>{{pw_info.11}}</td>
+                                <td>{{setup_place.11}}</td>
+                                <td>{{setup_date.11}}</td>
+                                <td>{{company_name.11}}</td>
+                                <td>{{display.11}}</td>
+                                <td>{{max_brgt.11}}</td>
+                                <td>{{serial_number.11}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.12}}</td>
+                                <td>{{pw_info.12}}</td>
+                                <td>{{setup_place.12}}</td>
+                                <td>{{setup_date.12}}</td>
+                                <td>{{company_name.12}}</td>
+                                <td>{{display.12}}</td>
+                                <td>{{max_brgt.12}}</td>
+                                <td>{{serial_number.12}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.13}}</td>
+                                <td>{{pw_info.13}}</td>
+                                <td>{{setup_place.13}}</td>
+                                <td>{{setup_date.13}}</td>
+                                <td>{{company_name.13}}</td>
+                                <td>{{display.13}}</td>
+                                <td>{{max_brgt.13}}</td>
+                                <td>{{serial_number.13}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.14}}</td>
+                                <td>{{pw_info.14}}</td>
+                                <td>{{setup_place.14}}</td>
+                                <td>{{setup_date.14}}</td>
+                                <td>{{company_name.14}}</td>
+                                <td>{{display.14}}</td>
+                                <td>{{max_brgt.14}}</td>
+                                <td>{{serial_number.14}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                            <tr>
+                                <td>{{id_info.15}}</td>
+                                <td>{{pw_info.15}}</td>
+                                <td>{{setup_place.15}}</td>
+                                <td>{{setup_date.15}}</td>
+                                <td>{{company_name.15}}</td>
+                                <td>{{display.15}}</td>
+                                <td>{{max_brgt.15}}</td>
+                                <td>{{serial_number.15}}</td>
+                                <td><input type="button" class="checkBtn" value="클릭" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table align=right class="button-table">
+                        <tr>
+                            <td>
+                                <button class="okay" onclick="PopupCheck()">확인</button>
+                            </td>
+                            <td>
+                                <button class="cancel" onclick="closePopupCheck()">취소</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <!--등록하시겠습니까-->
+            <div id="popup" class="hide">
+
+                <div class="content">
+                    <div class="title">
+                        사용자 등록
+                    </div>
+                   <p style="height: 75px; border-bottom: #363636 4px solid; ">
+                       <span style="font-size: 14px; line-height: 60px;">등록하시겠습니까?</span>
+                   </p>
+                   <div align="right" style="padding-right:20px;">
+                    <span style="padding-right: 10px;">
+                        <button class="okay" onclick="closePopup()">확인</button>
+                    </span>
+                    <button class="cancel" onclick="closePopup()">취소</button>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    /* 등록 팝업 */
+function showPopup(hasFilter) {
+   const popup = document.querySelector('#popup');
+
+  if (hasFilter) {
+     popup.classList.add('has-filter');
+  } else {
+     popup.classList.remove('has-filter');
+  }
+
+  popup.classList.remove('hide');
+}
+
+function closePopup() {
+   const popup = document.querySelector('#popup');
+  popup.classList.add('hide');
+}
+/* 조회 팝업 확인*/
+
+function PopupCheck() {
+   const popupCheck = document.querySelector('#popupCheck');
+   popupCheck.classList.add('hide');
+}
+
+/* 조회 팝업 취소*/
+
+function closePopupCheck() {
+   const popupCheck = document.querySelector('#popupCheck');
+   var el = document.getElementsByClassName('text-field');
+            for(var i=0; i<el.length; i++){
+                el[i].value = '';
+            }
+  popupCheck.classList.add('hide');
+
+}
+
+/* 체크박스 하나만 선택 */
+function checkOnlyOneRegister(element) {
+  const checkboxes = document.getElementsByName("ckbSelect");
+
+  checkboxes.forEach((cb) => {
+      cb.checked = false;
+  })
+
+  element.checked = true;
+}
+/* 체크박스 선택 후 확인을 누른경우*/
+// 버튼 클릭시 Row 값 가져오기
+$(".checkBtn").click(function(){
+
+         var str = ""
+         var tdArr = new Array();   // 배열 선언
+         var checkBtn = $(this);
+
+         // checkBtn.parent() : checkBtn의 부모는 <td>이다.
+         // checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+         var tr = checkBtn.parent().parent();
+         var td = tr.children();
+
+         console.log("클릭한 Row의 모든 데이터 : "+tr.text());
+
+         var userid = td.eq(0).text();
+         var userpw = td.eq(1).text();
+         var setup_place = td.eq(2).text();
+         var setup_date = td.eq(3).text();
+            var company_name = td.eq(4).text();
+            var display = td.eq(5).text();
+            var max_brgt = td.eq(6).text();
+            var serial_number = td.eq(7).text();
+
+
+         // 반복문을 이용해서 배열에 값을 담아 사용할 수 도 있다.
+         td.each(function(i){
+            tdArr.push(td.eq(i).text());
+         });
+
+
+         $("#option1").val(userid)
+            $("#option2").val(userpw)
+            $("#option3").val(setup_place)
+            $("#option4").val(setup_date)
+            $("#option5").val(company_name)
+            $("#option6").val(display)
+            $("#option7").val(max_brgt)
+            $("#option8").val(serial_number)
+      });
+
+        /* 텍스트박스 지우는 부분 */
+        function clearInput(){
+            var el = document.getElementsByClassName('text-field');
+            for(var i=0; i<el.length; i++){
+                el[i].value = '';
+            }
+        }
+</script>
+</body>
+{%endblock content%} 

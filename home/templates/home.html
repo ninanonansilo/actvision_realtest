@@ -1,0 +1,79 @@
+
+{% extends 'base.html' %} 
+{%block content%} 
+{%load static%}
+<head>
+    <link rel="stylesheet" href="{%static 'base.css'%}">
+    <title>Actvision</title>
+    <style>
+        .LOGO{
+            margin-top: 300px;
+            margin-left: 5%;
+            width: 90%;
+            height: auto;
+        }
+    </style>
+</head>
+<body bgcolor="#454545">
+    <header>
+    <nav>
+      <div>
+        <ul class="nav-container">
+          <a class="LOGO_img">
+            <img src="{%static 'navLogo.jpg'%}">
+          </a>
+          <li class="nav-item">
+            <a href="{% url 'movie.html' %}" class="nav-link">
+              <img class="media" onclick="toggleImg()" id="imgMovie" src="{%static 'media.jpg'%}">
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'image.html' %}" class="nav-link">
+              <img class="media" onclick="toggleImgEvent()" id="imgEvent" src="{%static 'event.jpg'%}">
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'settings.html' %}"  class="nav-link">
+              <img class="media" onclick="toggleImgSetting()" id="imgSetting" src="{%static 'setting.jpg'%}">
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'inform.html' %}" class="nav-link">
+              <img class="media" onclick="toggleImgInform()" id="imgInform" src="{%static 'inform.jpg'%}">
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'register.html' %}" class="nav-link">
+              <img class="media" onclick="toggleImgRegister()" id="imgRegister" src="{%static 'register.jpg'%}">
+            </a>
+          </li>
+          <li class="user_inform">
+            <ul>
+       <li>ID    :{{userinfo}}</li>
+              <li>Serial:</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+    <img class="LOGO" src="{%static 'ActvisionBigLogo.jpg'%}">
+    <script>
+        function toggleImg() {
+          var img1 = document.getElementById("imgMovie").src = "{%static 'clickmedia.jpg'%}";
+        }
+        function toggleImgEvent() {
+          var img1 = document.getElementById("imgEvent").src = "{%static 'clickevent.jpg'%}";
+        }
+        function toggleImgSetting() {
+          var img1 = document.getElementById("imgSetting").src = "{%static 'clicksetting.jpg'%}";
+        }
+        function toggleImgInform() {
+          var img1 = document.getElementById("imgInform").src = "{%static 'clickinform.jpg'%}";
+        }
+        function toggleImgRegister() {
+          var img1 = document.getElementById("imgRegister").src = "{%static 'clickregister.jpg'%}";
+        }
+      </script>
+</body>
+{%endblock content%} 
