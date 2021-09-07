@@ -96,6 +96,8 @@ def save_letter(request): # 문자 설정 -> 확인 버튼 눌렀을 시 // 버�
         data[4]["detail_info"]["font_size"] = "64"     # 폰트사이즈 - 인터페이스 수정 전까지 고정시킴
         data[4]["detail_info"]["scroll_fix"] = str(change[10])
         data[4]["detail_info"]["play_second"] = str(change[11])
+        data[4]["detail_info"]["thickness_italics"] = str(change[12])
+
         data[4]["title"] = str(change[0])
         hex = str("#" + change[8])
         rgb_value = ImageColor.getcolor(hex,"RGB")
@@ -161,6 +163,7 @@ def edit_letter(request): # 문자편집
         data[4]["detail_info"]["font_size"] = "64"     # 폰트사이즈 - 인터페이스 수정 전까지 고정시킴
         data[4]["detail_info"]["scroll_fix"] = str(change[10])
         data[4]["detail_info"]["play_second"] = str(change[11])
+
         data[4]["title"] = str(change[0])
         hex = str("#" + change[8])
         rgb_value = ImageColor.getcolor(hex,"RGB")
@@ -198,10 +201,12 @@ def event_trans(request):    # 이벤트 전송 버튼 TEXT_LIST에서 선택된
         if blob.name.startswith(except_str1):
             blob.name = blob.name.replace(except_str1, '')
             list_blob_text.append(blob.name)
-    if (len(list_blob_img)) >= 2:
-        list_blob_img.pop(0)
-    if (len(list_blob_text)) >= 2:
-        list_blob_text.pop(0)
+    print("zzzz")
+    print(list_blob_text)
+    #if (len(list_blob_img)) >= 2:
+    #    list_blob_img.pop(0)
+    #if (len(list_blob_text)) >= 2:
+    #    list_blob_text.pop(0)
 
     call_text = []  # TEXT_LIST에서 선택된 문자를 담을 리스트
     call_img = []
@@ -296,7 +301,7 @@ def event_trans(request):    # 이벤트 전송 버튼 TEXT_LIST에서 선택된
         info["detail_info"]["font_name"] = "NanumGothic"  # 추가필요
         info["detail_info"]["font_size"] = text_setting[4]["detail_info"]["font_size"]
         info["detail_info"]["play_second"] = text_setting[4]["detail_info"]["play_second"]
-        info["detail_info"]["thickness_italics"] = "0"  # 추가필요
+        info["detail_info"]["thickness_italics"] = text_setting[4]["detail_info"]["thickness_italics"]
         info["detail_info"]["red_green_blue"] = text_setting[4]["detail_info"]["red_green_blue"]
 
         info["time"] = {}
@@ -346,7 +351,7 @@ def event_trans(request):    # 이벤트 전송 버튼 TEXT_LIST에서 선택된
         info["action"] = "stop"
 
 
-    data.append(info)
+        data.append(info)
     # 추가) 기존의 타임테이블 가져와서 시간 중복 처리########################################
 
     # 최신 타임테이블을 가져옴

@@ -19,7 +19,6 @@ def time_now(): # 파일이름 저장할 때 사용할 목적의 시간함수
     return now_kst
 
 
-
 def save_file(setting):  # 파일 이름을 현재 시간으로 저장
     now = datetime.utcnow()
     UTC = pytz.timezone('UTC')
@@ -41,7 +40,7 @@ def list_blobs(bucket_name): # 버킷 -> JSON/READALL 안에 가장 최신파일
     # bucket_name = "your-bucket-name"
 
     # Note: Client.list_blobs requires at least package version 1.17.0.
-    blobs = storage_client.list_blobs("ynu-mcl-act")
+    blobs = storage_client.list_blobs("ynumcl-act")
     list_blob = []
     i = 0
     except_str = str(user_id + "/JSON/READALL/")  # 제외시킬 문자열
@@ -76,24 +75,49 @@ def read_timetable():  # 임시파일에 있는 tmep를 json으로 읽어와 반
 def setting_json():  # 초기에 JSON 만듬
     setting = dict()
 
-    setting["Pattern"] = "-1"
+    setting["Pattern"] = "5"
 
     Brightness_Control = dict()
-    Brightness_Control["Mode"] = "0"
-    Brightness_Control["Brightness"] = "20"
-    Brightness_Control["CDS_Value"] = "0"
-    Brightness_Control["Auto_Brightness"] = ["1", "10"]
-    Brightness_Control["Auto_CDS"] = ["0", "0"]
+    Brightness_Control["Mode"] = "1"
+    Brightness_Control["Brightness"] = "32"
+    Brightness_Control["CDS_Value"] = "2"
+
+    min_max_Brightness = dict()
+    min_max_Brightness["min"] = "-1"
+    min_max_Brightness["max"] = "-1"
+    Brightness_Control["Auto_Brightness"] = min_max_Brightness
+
+    min_max_CDS = dict()
+    min_max_CDS["min"] = "-1"
+    min_max_CDS["max"] = "-1"
+    Brightness_Control["Auto_CDS"] = min_max_CDS
+
     setting["Brightness_Control"] = Brightness_Control
 
     Power = dict()
-    Power["Manual_ONOFF"] = "0"
-    Power["Mode"] = "0"
-    Power["Auto_ON"] = ["0", "0"]
-    Power["Auto_OFF"] = ["0", "0"]
+    Power["Manual_ONOFF"] = "-1"
+    Power["Mode"] = "-1"
+
+    Auto_ON = dict()
+    Auto_ON["min"] = "-1"
+    Auto_ON["max"] = "-1"
+    Power["Auto_ON"] = Auto_ON
+
+    Auto_Off = dict()
+    Auto_Off["min"] = "-1"
+    Auto_Off["max"] = "-1"
+    Power["Auto_OFF"] = Auto_Off
     setting["Power_Control"] = Power
 
-    setting["Time"] = ["2021", "7", "21", "13", "42"," 3"]
+    Time_dict = dict()
+    Time_dict["year"] = "2021"
+    Time_dict["month"] = "09"
+    Time_dict["day"] = "03"
+    Time_dict["minute"] = "30"
+    Time_dict["second"] = "41"
+    setting["Time"] = Time_dict
+
+    setting["Current_TIme"] = "read"
 
     return setting
 

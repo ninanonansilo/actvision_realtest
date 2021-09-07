@@ -1,6 +1,20 @@
 from settings.update_json import *
 
+def setting_in_bucket(): # 버킷안에 저장된 이미지 리스트를 불러냄
 
+    blobs = storage_client.list_blobs("ynumcl-act")
+    list_blob = []
+
+    except_str = str(user_id + "/JSON/READALL/")  # 제외시킬 문자열
+    for blob in blobs:
+        if blob.name.startswith(except_str):
+            blob.name = blob.name.replace(except_str, '')
+            if blob.name == '':
+                pass
+            else:
+                list_blob.append(blob.name)
+
+    return list_blob
 
 def img_list_in_bucket(bucket_name): # 버킷안에 저장된 이미지 리스트를 불러냄
 

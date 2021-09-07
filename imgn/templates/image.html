@@ -1545,18 +1545,63 @@ th{
                                 &nbsp;
                                 <select name="재생속도" id ="text_size"style="width: 65px; height: 28px; background-color: #454545; color: white;">
                                                      <option>크기</option>
-				<%for(int i = 10;i<151;i++){
-				%>
-					<option value="<%=i%>"><%= i %></option>
-					<%
-				}
-					%>
+            <%for(int i = 10;i<151;i++){
+            %>
+               <option value="<%=i%>"><%= i %></option>
+               <%
+            }
+               %>
+<script>
+var thickness_italics = 0
+var count_b = 0;
+var count_i = 0
 
+var property2 = document.getElementById("button2");
+    function textbold()
+    {
+
+        var property1 = document.getElementById("button1");
+        var property2 = document.getElementById("button2");
+        if (count_b == 0){
+        count_b = 1;
+        property1.style.backgroundColor = "#202020"
+        property2.style.backgroundColor = "#606060"
+        thickness_italics = 1
+                        }
+        else{
+         count_b = 0;
+         property1.style.backgroundColor = "#606060"
+         thickness_italics = 0
+        }
+
+
+    }
+    function textitalics()
+    {
+
+        var property1 = document.getElementById("button1");
+        var property2 = document.getElementById("button2");
+        if (count_i == 0){
+        count_i = 1;
+        property1.style.backgroundColor = "#606060"
+        property2.style.backgroundColor = "#202020"
+        thickness_italics = 2
+                        }
+        else{
+         count_i = 0;
+         property2.style.backgroundColor = "#606060"
+         thickness_italics = 0
+        }
+
+
+    }
+
+</script>
                                 </select>
                                 <br>
                                 <div class="edit-box" style="text-align: left; margin-left: 23px;">
-                                    <button type="button" class="bold-btn" >B</button>
-                                <button type="button" class="slant-btn">I</button>
+                                    <button type="button" id="button1"  class="bold-btn" onclick="textbold()" >B</button>
+                                <button type="button" id="button2" class="slant-btn" onclick="textitalics()" >I</button>
                                 <input type="color" name="favcolor" id="color_set" value="#CD1313" style="background-color: #454545;">
                                 </div>
                                 <br>
@@ -1595,7 +1640,7 @@ th{
 
                             var param = {"input_text" : input_text, "x_axis" : x_axis , "y_axis" : y_axis , "w_axis" : w_axis , "h_axis" : h_axis ,
                             "play_speed" : play_speed , "play_number" : play_number , "text_size" : text_size , "color_set" : color_set, "text_list_name" : text_list_name,
-                            "scroll" : scroll, "play_sec" : play_sec,};
+                            "scroll" : scroll, "play_sec" : play_sec, "thickness_italics_input" : thickness_italics,};
 
                             var id_name = "text_fileName";
                             var name =  document.getElementById(id_name + j); // 파일 이름 받아옴
@@ -1679,7 +1724,7 @@ th{
             </script>
            <div id="aside">
                 <div class="button"  style="margin-top: 20px;">
-                    <button onclick="showPopupDeleteD(false)" style="margin-top: 0px;" class="edit-btn">편집</button>
+                     <button onclick="showPopupDeleteD(false)" style="margin-top: 0px;" class="edit-btn">편집</button>
                 </div>
                 <div id="popupDeleteD" class="hide">
 
@@ -1972,7 +2017,6 @@ th{
             <div class="button">
 
                   <script>
-/*
                 function showpopup_preview(hasFilter) {   // 일단 미사용하기로
 
                 const popup = document.querySelector('#popup_preview');
@@ -2006,7 +2050,7 @@ th{
 
                   popup.classList.remove('hide');
                      }
-                     */
+
 
                 function closepopup_preview() {
                     const popup = document.querySelector('#popup_preview');
@@ -2143,6 +2187,7 @@ th{
 
             /*미리보기 팝업*/
 
+/*
 
 function showpopup_preview(hasFilter) {
    const popup = document.querySelector('#popup_preview');
@@ -2182,6 +2227,8 @@ function showpopup_preview(hasFilter) {
 
   popup.classList.remove('hide');
 }
+
+*/
 
 function closepopup_preview() {
    const popup = document.querySelector('#popup_preview');

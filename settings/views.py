@@ -32,6 +32,7 @@ auto_on_hour_check = -1
 auto_on_min_check = -1
 auto_off_hour_check = -1
 auto_off_min_check = -1
+first_loading = 1;
 def settings(request):
 
     list_dict = {
@@ -176,16 +177,12 @@ def check_Brightness_mode_auto_CDS(request):
         return redirect('settings.html')
 
 
-first_loading = 1;
+
 
 
 @csrf_exempt
 def update_Brightness(request): # 밝기 업데이트2
     global first_loading
-    print(first_loading)
-    print(first_loading)
-    print(first_loading)
-    print(first_loading)
     if(first_loading == 1):
         print("===================첫번째 로딩===================")
         now_kst = time_now()
