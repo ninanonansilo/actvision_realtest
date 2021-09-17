@@ -1,5 +1,5 @@
 import json
-
+#ㄹㄷㅈㅁㄹㅁㄷㅈㄹㄷㅈㅁㄹㅁ
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from settings.update_json import *
